@@ -1,8 +1,3 @@
-const crypto = require('crypto');
-
-// Vercel KV storage simulation (gunakan Vercel KV atau database production)
-const links = new Map();
-
 export default function handler(req, res) {
     const { title, desc, image, url, type } = req.query;
     
@@ -10,16 +5,10 @@ export default function handler(req, res) {
         return res.status(400).json({ error: 'Missing: title, image, url' });
     }
     
-    const id = crypto.randomBytes(4).toString('hex');
+    // Encode data ke base64 untuk ID
+    const data = JSON.stringify({ title, desc: desc || '', image, url, type: type || 'website' });
+    const id = Buffer.from(data).toString('base64url');
     const baseUrl = `https://${req.headers.host}`;
-    
-    links.set(id, { 
-        title, 
-        description: desc || '', 
-        image, 
-        url,
-        type: type || 'website'
-    });
     
     res.json({
         success: true,

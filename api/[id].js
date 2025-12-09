@@ -1,15 +1,15 @@
-// Temporary storage (production: gunakan Vercel KV/Redis)
-const links = new Map();
-
 export default function handler(req, res) {
     const { id } = req.query;
-    const data = links.get(id);
     
-    if (!data) {
+    let title, description, image, url, type;
+    
+    try {
+        const decoded = Buffer.from(id, 'base64url').toString('utf-8');
+        const data = JSON.parse(decoded);
+        ({ title, desc: description, image, url, type = 'website' } = data);
+    } catch (error) {
         return res.status(404).send('Link not found');
     }
-    
-    const { title, description, image, url, type = 'website' } = data;
     
     res.setHeader('Content-Type', 'text/html');
     res.send(`<!DOCTYPE html>
