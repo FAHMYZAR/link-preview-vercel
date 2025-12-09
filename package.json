@@ -1,0 +1,13 @@
+{
+  "name": "link-preview-service",
+  "version": "1.0.0",
+  "description": "Link preview service for WhatsApp, Discord, Twitter",
+  "main": "api/create.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["link-preview", "og-image", "whatsapp", "discord"],
+  "author": "EL-RUWET Team",
+  "license": "MIT"
+}
